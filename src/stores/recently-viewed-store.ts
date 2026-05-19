@@ -12,12 +12,12 @@ interface RecentlyViewedState {
 
 export const useRecentlyViewedStore = create<RecentlyViewedState>()(
   persist(
-    (set) => ({
+    (set: any) => ({
       items: [],
 
-      addItem: (product) => {
-        set((state) => {
-          const filtered = state.items.filter((item) => item.id !== product.id);
+      addItem: (product: Product) => {
+        set((state: RecentlyViewedState) => {
+          const filtered = state.items.filter((item: Product) => item.id !== product.id);
           return { items: [product, ...filtered].slice(0, 20) };
         });
       },

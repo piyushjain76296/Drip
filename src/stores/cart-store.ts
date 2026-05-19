@@ -30,14 +30,14 @@ interface CartState {
 
 export const useCartStore = create<CartState>()(
   persist(
-    (set, get) => ({
+    (set, get: any) => ({
       items: [],
       isOpen: false,
 
-      addItem: (product, size, color, quantity = 1) => {
-        set((state) => {
+      addItem: (product: Product, size: string, color: string, quantity: number = 1) => {
+        set((state: CartState) => {
           const existingIndex = state.items.findIndex(
-            (item) => item.product.id === product.id && item.size === size && item.color === color
+            (item: CartItem) => item.product.id === product.id && item.size === size && item.color === color
           );
 
           let newItems;

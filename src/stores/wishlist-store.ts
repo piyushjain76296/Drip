@@ -15,37 +15,40 @@ interface WishlistState {
 
 export const useWishlistStore = create<WishlistState>()(
   persist(
-    (set, get) => ({
-      items: [],
+    (set, get) => {
+      const storeState: WishlistState = {
+        items: [],
 
-      addItem: (product) => {
-        set((state) => {
-          if (state.items.find((item) => item.id === product.id)) return state;
-          return { items: [...state.items, product] };
-        });
-      },
+        addItem: (product: Product) => {
+          set((state: WishlistState) => {
+            if (state.items.find((item: Product) => item.id === product.id)) return state;
+            return { items: [...state.items, product] };
+          });
+        },
 
-      removeItem: (productId) => {
-        set((state) => ({
-          items: state.items.filter((item) => item.id !== productId),
-        }));
-      },
+        removeItem: (productId: string) => {
+          set((state: WishlistState) => ({
+            items: state.items.filter((item: Product) => item.id !== productId),
+          }));
+        },
 
-      toggleItem: (product) => {
-        const exists = get().items.find((item) => item.id === product.id);
-        if (exists) {
-          get().removeItem(product.id);
-        } else {
-          get().addItem(product);
-        }
-      },
+        toggleItem: (product: Product) => {
+          const exists = get().items.find((item: Product) => item.id === product.id);
+          if (exists) {
+            get().removeItem(product.id);
+          } else {
+            get().addItem(product);
+          }
+        },
 
-      isInWishlist: (productId) => {
-        return get().items.some((item) => item.id === productId);
-      },
+        isInWishlist: (productId: string) => {
+          return get().items.some((item: Product) => item.id === productId);
+        },
 
-      clearWishlist: () => set({ items: [] }),
-    }),
+        clearWishlist: () => set({ items: [] }),
+      };
+      return storeState;
+    },
     {
       name: 'drip-wishlist',
       storage: createJSONStorage(() => localStorage),

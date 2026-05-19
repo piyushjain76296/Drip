@@ -15,7 +15,7 @@ interface AuthState {
   getToken: () => Promise<string | null>;
 }
 
-export const useAuthStore = create<AuthState>((set, get) => ({
+export const useAuthStore = create<AuthState>((set, get: any) => ({
   user: null,
   loading: false,
   initialized: false,
@@ -32,7 +32,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     });
   },
 
-  signIn: async (email, password) => {
+  signIn: async (email: string, password: string) => {
     set({ loading: true });
     const supabase = createClient();
     const { error } = await supabase.auth.signInWithPassword({ email, password });
@@ -43,7 +43,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     return {};
   },
 
-  signUp: async (email, password, name) => {
+  signUp: async (email: string, password: string, name: string) => {
     set({ loading: true });
     const supabase = createClient();
     const { error } = await supabase.auth.signUp({
